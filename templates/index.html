@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ITOps Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>ITOps</h1>
+        <p>IT Support & Asset Management System</p>
+    </header>
+
+    <main>
+
+        <div class="dashboard-stats">
+
+            <div class="stat-card">
+                <h3>{{ total_tickets }}</h3>
+                <p>Total Tickets</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ open_tickets }}</h3>
+                <p>Open Tickets</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ in_progress_tickets }}</h3>
+                <p>In Progress</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ resolved_tickets }}</h3>
+                <p>Resolved</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ total_devices }}</h3>
+                <p>Devices</p>
+            </div>
+
+        </div>
+
+
+        <a class="button" href="{{ url_for('create_ticket') }}">
+            + Create New Ticket
+        </a>
+
+        <a class="button" href="{{ url_for('devices') }}">
+            View Device Inventory
+        </a>
+
+
+        <h2>Support Tickets</h2>
+
+
+        <form class="filter-form" method="GET">
+
+            <div>
+                <label>Search</label>
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search tickets..."
+                    value="{{ search }}">
+            </div>
+
+
+            <div>
+                <label>Status</label>
+
+                <select name="status">
+
+                    <option value="All"
+                        {% if status_filter == "All" %}selected{% endif %}>
+                        All
+                    </option>
+
+                    <option value="Open"
+                        {% if status_filter == "Open" %}selected{% endif %}>
+                        Open
+                    </option>
+
+                    <option value="In Progress"
+                        {% if status_filter == "In Progress" %}selected{% endif %}>
+                        In Progress
+                    </option>
+
+                    <option value="Resolved"
+                        {% if status_filter == "Resolved" %}selected{% endif %}>
+                        Resolved
+                    </option>
+
+                </select>
+            </div>
+
+
+            <div>
+                <label>Priority</label>
+
+                <select name="priority">
+
+                    <option value="All"
+                        {% if priority_filter == "All" %}selected{% endif %}>
+                        All
+                    </option>
+
+                    <option value="Low"
+                        {% if priority_filter == "Low" %}selected{% endif %}>
+                        Low
+                    </option>
+
+                    <option value="Medium"
+                        {% if priority_filter == "Medium" %}selected{% endif %}>
+                        Medium
+                    </option>
+
+                    <option value="High"
+                        {% if priority_filter == "High" %}selected{% endif %}>
+                        High
+                    </option>
+
+                </select>
+            </div>
+
+
+            <button type="submit">
+                Filter
+            </button>
+
+            <a class="clear-button" href="{{ url_for('home') }}">
+                Clear
+            </a>
+
+        </form>
+
+
+        <p>
+            Showing {{ tickets|length }} of {{ total_tickets }} tickets
+        </p>
+
+
+        <div class="ticket-container">
+
+            {% for ticket in tickets %}
+
+            <div class="ticket-card">
+
+                <h3>{{ ticket.title }}</h3>
+
+                <p>
+                    <strong>Ticket ID:</strong>
+                    {{ ticket.ticket_id }}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    {{ ticket.description }}
+                </p>
+
+                <p>
+                    <strong>Employee:</strong>
+                    {{ ticket.employee_first_name }}
+                    {{ ticket.employee_last_name }}
+                </p>
+
+                <p>
+                    <strong>Technician:</strong>
+                    {{ ticket.technician_first_name }}
+                    {{ ticket.technician_last_name }}
+                </p>
+
+                <p>
+                    <strong>Priority:</strong>
+                    {{ ticket.priority }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {{ ticket.status }}
+                </p>
+
+                <p>
+                    <strong>Device:</strong>
+                    {{ ticket.device_name }}
+                </p>
+
+                <p>
+                    <strong>Operating System:</strong>
+                    {{ ticket.operating_system }}
+                </p>
+
+
+                <form method="POST"
+                      action="{{ url_for('update_ticket',
+                                         ticket_id=ticket.ticket_id) }}">
+
+                    <select name="status">
+
+                        <option value="Open"
+                            {% if ticket.status == "Open" %}selected{% endif %}>
+                            Open
+                        </option>
+
+                        <option value="In Progress"
+                            {% if ticket.status == "In Progress" %}selected{% endif %}>
+                            In Progress
+                        </option>
+
+                        <option value="Resolved"
+                            {% if ticket.status == "Resolved" %}selected{% endif %}>
+                            Resolved
+                        </option>
+
+                    </select>
+
+                    <button type="submit">
+                        Update Status
+                    </button>
+
+                </form>
+
+            </div>
+
+            {% endfor %}
+
+
+            {% if tickets|length == 0 %}
+
+            <p>No tickets match your search or filters.</p>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

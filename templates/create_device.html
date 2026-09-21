@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Device - ITOps</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>ITOps</h1>
+        <p>IT Support & Asset Management System</p>
+    </header>
+
+    <main>
+
+        <a class="button" href="{{ url_for('devices') }}">
+            Back to Device Inventory
+        </a>
+
+        <h2>Add New Device</h2>
+
+        <form method="POST">
+
+            <label>Device Name</label>
+            <input type="text"
+                   name="device_name"
+                   placeholder="LT-004"
+                   required>
+
+            <label>Device Type</label>
+            <select name="device_type">
+                <option>Laptop</option>
+                <option>Desktop</option>
+                <option>Tablet</option>
+                <option>Phone</option>
+            </select>
+
+            <label>Operating System</label>
+            <input type="text"
+                   name="operating_system"
+                   placeholder="Windows 11"
+                   required>
+
+            <label>IP Address</label>
+            <input type="text"
+                   name="ip_address"
+                   placeholder="192.168.1.24"
+                   required>
+
+            <label>Status</label>
+            <select name="status">
+                <option>Active</option>
+                <option>Maintenance</option>
+                <option>Inactive</option>
+            </select>
+
+            <label>Assigned User</label>
+            <select name="assigned_user">
+
+                {% for user in users %}
+
+                <option value="{{ user.user_id }}">
+                    {{ user.first_name }}
+                    {{ user.last_name }}
+                    - {{ user.role }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                Add Device
+            </button>
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

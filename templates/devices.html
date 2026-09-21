@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Devices - ITOps</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>ITOps</h1>
+        <p>IT Support & Asset Management System</p>
+    </header>
+
+    <main>
+
+        <a class="button" href="{{ url_for('home') }}">
+            Back to Dashboard
+        </a>
+
+        <a class="button" href="{{ url_for('create_device') }}">
+            + Add New Device
+        </a>
+
+        <h2>Device Inventory</h2>
+
+        <div class="device-container">
+
+            {% for device in devices %}
+
+            <div class="device-card">
+
+                <h3>{{ device.device_name }}</h3>
+
+                <p>
+                    <strong>Device ID:</strong>
+                    {{ device.device_id }}
+                </p>
+
+                <p>
+                    <strong>Type:</strong>
+                    {{ device.device_type }}
+                </p>
+
+                <p>
+                    <strong>Operating System:</strong>
+                    {{ device.operating_system }}
+                </p>
+
+                <p>
+                    <strong>IP Address:</strong>
+                    {{ device.ip_address }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {{ device.status }}
+                </p>
+
+                <p>
+                    <strong>Assigned User:</strong>
+                    {{ device.first_name }}
+                    {{ device.last_name }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

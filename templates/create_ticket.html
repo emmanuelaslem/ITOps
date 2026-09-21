@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Ticket - ITOps</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>ITOps</h1>
+        <p>IT Support & Asset Management System</p>
+    </header>
+
+    <main>
+
+        <a class="button" href="{{ url_for('home') }}">
+            Back to Dashboard
+        </a>
+
+        <h2>Create New Support Ticket</h2>
+
+        <form method="POST">
+
+            <label>Title</label>
+            <input type="text" name="title" required>
+
+            <label>Description</label>
+            <textarea name="description" required></textarea>
+
+            <label>Employee</label>
+            <select name="employee">
+
+                {% for employee in employees %}
+
+                <option value="{{ employee.user_id }}">
+                    {{ employee.first_name }}
+                    {{ employee.last_name }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <label>Device</label>
+            <select name="device">
+
+                {% for device in devices %}
+
+                <option value="{{ device.device_id }}">
+                    {{ device.device_name }}
+                    - {{ device.operating_system }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <label>Priority</label>
+            <select name="priority">
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select>
+
+            <label>Technician</label>
+            <select name="technician">
+
+                {% for technician in technicians %}
+
+                <option value="{{ technician.user_id }}">
+                    {{ technician.first_name }}
+                    {{ technician.last_name }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                Create Ticket
+            </button>
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

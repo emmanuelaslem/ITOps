@@ -86,6 +86,7 @@ ITOps/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
 
 ## Screenshots
 

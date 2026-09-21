@@ -86,3 +86,17 @@ ITOps/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+
+## Screenshots
+
+### Dashboard
+
+![ITOps Dashboard](screenshots/dashboard.png)
+
+### Create Ticket
+
+![Create Ticket](screenshots/createticket.png)
+
+### Device Inventory
+
+![Device Inventory](screenshots/devices.png)
